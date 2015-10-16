@@ -14,13 +14,13 @@ import lejos.robotics.subsumption.Behavior;
 
 public class Main {
 	
-	static EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.A);
-    static EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.D);
+	public static EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.A);
+    public static EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.D);
     
-    static EV3TouchSensor touchLeftSensor = new EV3TouchSensor(LocalEV3.get().getPort("S1"));
-    static EV3TouchSensor touchRightSensor = new EV3TouchSensor(LocalEV3.get().getPort("S4"));
-    static NXTLightSensor lightSensor = new NXTLightSensor(LocalEV3.get().getPort("S2"));
-    static EV3UltrasonicSensor distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S3"));
+    public static EV3TouchSensor touchLeftSensor = new EV3TouchSensor(LocalEV3.get().getPort("S1"));
+    public static EV3TouchSensor touchRightSensor = new EV3TouchSensor(LocalEV3.get().getPort("S4"));
+    public static NXTLightSensor lightSensor = new NXTLightSensor(LocalEV3.get().getPort("S2"));
+    public static EV3UltrasonicSensor distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S3"));
 
 	public static void main(String[] args) {
 		SampleProvider touchL 	= touchLeftSensor.getTouchMode();
@@ -32,7 +32,13 @@ public class Main {
 		float[] lightSamples = new float[light.sampleSize()];
 		float[] distanceSamples = new float[distance.sampleSize()];
 		
-		while(!Button.ESCAPE.isDown()){
+		Behavior drive = new DriveForward();
+		Behavior detectObj = new DetectObject();
+		Behavior detectLine= new DetectLine();
+		Behavior[] bList = {drive, detectObj, detectLine};
+		Arbitrator ar = new Arbitrator(bList);
+		ar.start();
+		/*while(!Button.ESCAPE.isDown()){
 			touchL.fetchSample(touchLeftSamples, 0);
 			touchR.fetchSample(touchRightSamples, 0);
 			light.fetchSample(lightSamples, 0);
@@ -41,7 +47,7 @@ public class Main {
 			LCD.drawString("TR "+touchRightSamples[0], 0, 1);
 			LCD.drawString("LI "+lightSamples[0], 0, 2);
 			LCD.drawString("DI "+distanceSamples[0]+"m", 0, 3);
-		}
+		}*/
 	}
 
 }
