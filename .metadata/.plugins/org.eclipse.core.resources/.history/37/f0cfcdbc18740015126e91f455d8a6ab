@@ -14,7 +14,7 @@ public class DriveForward implements Behavior{
 	@Override
 	public void action() {
 		suppressed = false;
-		//Sound.buzz();
+		Sound.buzz();
 		while(!suppressed){
 			Main.leftMotor.forward();
 			Main.rightMotor.forward();

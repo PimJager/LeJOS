@@ -13,7 +13,7 @@ public class DetectLine implements Behavior {
 	public boolean takeControl() {
 		light.fetchSample(lightSamples, 0);
 		if(lightSamples[0] < TRESHOLD){
-			//Sound.beep();
+			Sound.beep();
 			return true;
 		}
 		return false;
@@ -29,8 +29,6 @@ public class DetectLine implements Behavior {
 	}
 	
 	public void beforeRotate(){
-		Main.leftMotor.stop(true);
-		Main.rightMotor.stop();
 		Main.leftMotor.setSpeed(Main.ROTATE_SPEED);
 		Main.rightMotor.setSpeed(Main.ROTATE_SPEED);
 	}

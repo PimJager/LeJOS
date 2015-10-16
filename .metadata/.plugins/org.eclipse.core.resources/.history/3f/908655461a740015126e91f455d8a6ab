@@ -13,7 +13,7 @@ public class DetectLine implements Behavior {
 	public boolean takeControl() {
 		light.fetchSample(lightSamples, 0);
 		if(lightSamples[0] < TRESHOLD){
-			//Sound.beep();
+			Sound.beep();
 			return true;
 		}
 		return false;

@@ -28,6 +28,8 @@ public class DetectObject implements Behavior{
 
 	@Override
 	public void action() {
+		Main.leftMotor.stop(true);
+		Main.rightMotor.stop();
 		beforeRotate();
 		if(distanceSamples[0] < SAFE_DISTANCE){
 			//turn left
@@ -51,8 +53,6 @@ public class DetectObject implements Behavior{
 	}
 	
 	public void beforeRotate(){
-		Main.leftMotor.stop(true);
-		Main.rightMotor.stop();
 		Main.leftMotor.setSpeed(Main.ROTATE_SPEED);
 		Main.rightMotor.setSpeed(Main.ROTATE_SPEED);
 	}
