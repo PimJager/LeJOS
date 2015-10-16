@@ -153,3 +153,27 @@ java.lang.Exception: No EV3 Found: java.net.SocketTimeoutException: Receive time
 	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
 	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.lejos.ev3.ldt 4 0 2015-10-16 13:56:45.264
+!MESSAGE No EV3 Found: java.net.BindException: Address already in use
+!STACK 0
+java.lang.Exception: No EV3 Found: java.net.BindException: Address already in use
+	at org.lejos.ev3.ldt.util.Discover.discover(Discover.java:43)
+	at org.lejos.ev3.ldt.launch.LaunchEV3ConfigDelegate.launch(LaunchEV3ConfigDelegate.java:163)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:885)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:739)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.lejos.ev3.ldt 4 0 2015-10-16 13:58:53.197
+!MESSAGE No EV3 Found: java.net.BindException: Address already in use
+!STACK 0
+java.lang.Exception: No EV3 Found: java.net.BindException: Address already in use
+	at org.lejos.ev3.ldt.util.Discover.discover(Discover.java:43)
+	at org.lejos.ev3.ldt.launch.LaunchEV3ConfigDelegate.launch(LaunchEV3ConfigDelegate.java:163)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:885)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:739)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
