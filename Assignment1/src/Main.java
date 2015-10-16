@@ -23,6 +23,7 @@ public class Main {
     public static EV3UltrasonicSensor distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S3"));
 
     public static int DEFAULT_SPEED = 300;
+    public static int ROTATE_SPEED = 100;
     public static int DEFAULT_ACC = 800;
     
 	public static void main(String[] args) {
