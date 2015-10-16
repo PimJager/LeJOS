@@ -1,4 +1,3 @@
-import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
@@ -7,7 +6,6 @@ import lejos.hardware.port.MotorPort;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.NXTLightSensor;
-import lejos.robotics.SampleProvider;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 
@@ -26,6 +24,7 @@ public class Main {
     public static int DEFAULT_ACC = 800;
     
 	public static void main(String[] args) {
+		
 		init();
 		
 		Behavior drive = new DriveForward();
@@ -34,6 +33,7 @@ public class Main {
 		Behavior[] bList = {drive, detectObj, detectLine};
 		Arbitrator ar = new Arbitrator(bList);
 		ar.start();
+		
 		
 		/*
 		SampleProvider touchL 	= touchLeftSensor.getTouchMode();

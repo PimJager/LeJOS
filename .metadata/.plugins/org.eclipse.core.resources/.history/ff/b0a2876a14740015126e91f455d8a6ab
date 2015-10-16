@@ -23,9 +23,10 @@ public class Main {
     public static EV3UltrasonicSensor distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S3"));
 
     public static int DEFAULT_SPEED = 300;
-    public static int DEFAULT_ACC = 800;
+    public static int DEFAULT_ACC = 100;
     
 	public static void main(String[] args) {
+		
 		init();
 		
 		Behavior drive = new DriveForward();
@@ -34,6 +35,7 @@ public class Main {
 		Behavior[] bList = {drive, detectObj, detectLine};
 		Arbitrator ar = new Arbitrator(bList);
 		ar.start();
+		
 		
 		/*
 		SampleProvider touchL 	= touchLeftSensor.getTouchMode();

@@ -17,24 +17,14 @@ public class DetectObject implements Behavior{
 
 	@Override
 	public void action() {
-		Main.leftMotor.stop(true);
-		Main.rightMotor.stop();
-		Main.leftMotor.rotate(-45, true);
-		Main.rightMotor.rotate(-45);
-		if(touchLeftSamples[0] > 0){
-			//rotate right
-			Main.leftMotor.rotate(100, true);
-			Main.rightMotor.rotate(-100);
-		} else {
-			//rotate left
-			Main.leftMotor.rotate(-100, true);
-			Main.rightMotor.rotate(100);
-		}
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void suppress() {
-		//we don't need to do anything
+		// TODO Auto-generated method stub
+		
 	}
 
 }

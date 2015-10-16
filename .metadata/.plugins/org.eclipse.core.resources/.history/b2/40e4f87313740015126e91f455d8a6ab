@@ -16,7 +16,6 @@ public class DriveForward implements Behavior{
 		while(!suppressed){
 			Main.leftMotor.forward();
 			Main.rightMotor.forward();
-			Thread.yield();
 		}
 	}
 

@@ -1,0 +1,29 @@
+import lejos.robotics.SampleProvider;
+import lejos.robotics.subsumption.Behavior;
+
+public class DetectObject implements Behavior{
+
+	@Override
+	public boolean takeControl() {
+		SampleProvider touchL 	= Main.touchLeftSensor.getTouchMode();
+		SampleProvider touchR 	= Main.touchRightSensor.getTouchMode();
+		float[] touchLeftSamples = new float[touchL.sampleSize()];
+		float[] touchRightSamples = new float[touchR.sampleSize()];
+		touchL.fetchSample(touchLeftSamples, 0);
+		touchR.fetchSample(touchRightSamples, 0);
+		return touchLeftSamples[0] > 0 || touchRightSamples[0] > 0;
+	}
+
+	@Override
+	public void action() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void suppress() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
