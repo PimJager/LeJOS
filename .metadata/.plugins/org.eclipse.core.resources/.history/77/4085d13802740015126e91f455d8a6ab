@@ -27,8 +27,6 @@ public class Main {
     
 	public static void main(String[] args) {
 		
-		init();
-		
 		Behavior drive = new DriveForward();
 		Behavior detectObj = new DetectObject();
 		Behavior detectLine= new DetectLine();
@@ -56,15 +54,8 @@ public class Main {
 		}*/
 	}
 
-	protected static void init(){
-		leftMotor.setSpeed(DEFAULT_SPEED);
-		leftMotor.setAcceleration(DEFAULT_ACC);
+	protected void init(){
 		
-		rightMotor.setSpeed(DEFAULT_SPEED);
-		rightMotor.setAcceleration(DEFAULT_ACC);
-		
-		leftMotor.rotateTo(0);
-		rightMotor.rotateTo(0);
 	}
 	
 }

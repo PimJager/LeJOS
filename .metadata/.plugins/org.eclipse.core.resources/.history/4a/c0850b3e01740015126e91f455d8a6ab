@@ -22,20 +22,7 @@ public class Main {
     public static NXTLightSensor lightSensor = new NXTLightSensor(LocalEV3.get().getPort("S2"));
     public static EV3UltrasonicSensor distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S3"));
 
-    public static int DEFAULT_SPEED = 300;
-    public static int DEFAULT_ACC = 100;
-    
 	public static void main(String[] args) {
-		
-		init();
-		
-		Behavior drive = new DriveForward();
-		Behavior detectObj = new DetectObject();
-		Behavior detectLine= new DetectLine();
-		Behavior[] bList = {drive, detectObj, detectLine};
-		Arbitrator ar = new Arbitrator(bList);
-		ar.start();
-		/*
 		SampleProvider touchL 	= touchLeftSensor.getTouchMode();
 		SampleProvider touchR 	= touchRightSensor.getTouchMode();
 		SampleProvider light  	= lightSensor.getRedMode();
@@ -44,7 +31,14 @@ public class Main {
 		float[] touchRightSamples = new float[touchR.sampleSize()];
 		float[] lightSamples = new float[light.sampleSize()];
 		float[] distanceSamples = new float[distance.sampleSize()];
-		while(!Button.ESCAPE.isDown()){
+		
+		Behavior drive = new DriveForward();
+		Behavior detectObj = new DetectObject();
+		Behavior detectLine= new DetectLine();
+		Behavior[] bList = {drive, detectObj, detectLine};
+		Arbitrator ar = new Arbitrator(bList);
+		ar.start();
+		/*while(!Button.ESCAPE.isDown()){
 			touchL.fetchSample(touchLeftSamples, 0);
 			touchR.fetchSample(touchRightSamples, 0);
 			light.fetchSample(lightSamples, 0);
@@ -56,15 +50,4 @@ public class Main {
 		}*/
 	}
 
-	protected static void init(){
-		leftMotor.setSpeed(DEFAULT_SPEED);
-		leftMotor.setAcceleration(DEFAULT_ACC);
-		
-		rightMotor.setSpeed(DEFAULT_SPEED);
-		rightMotor.setAcceleration(DEFAULT_ACC);
-		
-		leftMotor.rotateTo(0);
-		rightMotor.rotateTo(0);
-	}
-	
 }
