@@ -52,11 +52,11 @@ public class Whatever {
 		Behavior drive = new DriveForward();
 		Behavior lcd = new UpdateLCD();
 		Behavior detectColor = new DetectColor();
-		Behavior bluetooth = btSetup();
+		//Behavior bluetooth = btSetup();
 		Behavior detectObj = new DetectObject();
 		Behavior detectLine= new DetectLine();
 		Behavior quit = new Quit();
-		Behavior[] bList = {drive, lcd, detectColor, bluetooth, detectObj, detectLine, quit};
+		Behavior[] bList = {drive, lcd, detectColor, detectObj, detectLine, quit};
 		Arbitrator ar = new Arbitrator(bList);
 		ar.start();
 		
