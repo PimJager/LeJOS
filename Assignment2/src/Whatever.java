@@ -1,4 +1,8 @@
-	import lejos.hardware.Button;
+	import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import lejos.hardware.Button;
 import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
@@ -9,6 +13,8 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.NXTLightSensor;
+import lejos.remote.nxt.BTConnector;
+import lejos.remote.nxt.NXTConnection;
 import lejos.robotics.SampleProvider;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
@@ -40,7 +46,7 @@ public class Whatever {
     
 	public static void main(String[] args) {
 		init();
-		
+		/*
 		Behavior drive = new DriveForward();
 		Behavior lcd = new UpdateLCD();
 		Behavior detectColor = new DetectColor();
@@ -50,7 +56,49 @@ public class Whatever {
 		Behavior[] bList = {drive, detectColor, detectObj, detectLine, quit, lcd};
 		Arbitrator ar = new Arbitrator(bList);
 		ar.start();
+		*/
 		
+		LCD.drawString("_Select slave | master", 0, 0);
+		LCD.drawString("Left: master", 0, 1);
+		LCD.drawString("Right: slave", 0, 2);
+		boolean master = false;
+		boolean slave = false;
+		while(!master && !slave){
+			master = Button.LEFT.isDown();
+			slave = Button.RIGHT.isDown();
+		}
+		
+		LCD.clear();
+		
+		BTConnector connector = new BTConnector();
+		if(master) {
+			LCD.drawString("master", 0, 0);
+			NXTConnection connection = connector.connect("Rover4", NXTConnection.RAW);
+			LCD.drawString("Connected", 0, 1);
+			Sound.beep();
+			PrintWriter writer = new PrintWriter(connection.openOutputStream());
+			writer.println("3");
+			writer.flush();
+			LCD.drawString("send 3", 0, 2);
+		} else {
+			LCD.drawString("slav e", 0, 0);
+			NXTConnection connection = connector.waitForConnection(10000, NXTConnection.RAW);
+			LCD.drawString("Connected!!", 0, 1);
+			Sound.beep();
+			DataInputStream in = connection.openDataInputStream();
+			byte[] buffer = new byte[2];
+			int i = 0;
+			byte b;
+			try{
+				while((b = in.readByte()) != '\n' && i < 2)
+					buffer[i++] = b;
+				LCD.drawString("Received:", 0, 2);
+				LCD.drawString(new String(buffer), 0, 3);
+			} catch (IOException a) {
+				LCD.drawString("IO EXCEPTION", 0, 2);
+			}
+		}
+		while(true) {}
 	}
 
 	protected static void init(){
