@@ -2,11 +2,11 @@ import lejos.hardware.Sound;
 import lejos.robotics.SampleProvider;
 import lejos.robotics.subsumption.Behavior;
 
-public class DetectLine implements Behavior {
+public class DetectLine extends WhateverBehavior {
 
 	public static float TRESHOLD = (float) 0.45;
 	
-	static SampleProvider light  	= Whatever.lightSensor.getRedMode();
+	static SampleProvider light  	= Whatever.colorSensor.getRedMode();
 	static float[] lightSamples 	= new float[light.sampleSize()];
 
 	private boolean _supressed;
@@ -33,17 +33,6 @@ public class DetectLine implements Behavior {
 		if(!_supressed) afterRotate();
 	}
 	
-	public void beforeRotate(){
-		Whatever.leftMotor.stop(true);
-		Whatever.rightMotor.stop();
-		Whatever.leftMotor.setSpeed(Whatever.ROTATE_SPEED);
-		Whatever.rightMotor.setSpeed(Whatever.ROTATE_SPEED);
-	}
-	public void afterRotate(){
-		Whatever.leftMotor.setSpeed(Whatever.DEFAULT_SPEED);
-		Whatever.rightMotor.setSpeed(Whatever.DEFAULT_SPEED);
-	}
-
 	@Override
 	public void suppress() {
 		_supressed= true;

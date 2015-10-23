@@ -1,9 +1,10 @@
-import lejos.hardware.Button;
+	import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
+import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.NXTLightSensor;
@@ -19,7 +20,7 @@ public class Whatever {
     
     public static EV3TouchSensor touchLeftSensor = new EV3TouchSensor(LocalEV3.get().getPort("S1"));
     public static EV3TouchSensor touchRightSensor = new EV3TouchSensor(LocalEV3.get().getPort("S4"));
-    public static NXTLightSensor lightSensor = new NXTLightSensor(LocalEV3.get().getPort("S2"));
+    public static EV3ColorSensor colorSensor = new EV3ColorSensor(LocalEV3.get().getPort("S2"));
     public static EV3UltrasonicSensor distanceSensor = new EV3UltrasonicSensor(LocalEV3.get().getPort("S3"));
 
     public static int DEFAULT_SPEED = 300;
@@ -28,14 +29,21 @@ public class Whatever {
     
 	public static void main(String[] args) {
 		init();
-		
+		/*
 		Behavior drive = new DriveForward();
 		Behavior detectObj = new DetectObject();
 		Behavior detectLine= new DetectLine();
 		Behavior[] bList = {drive, detectObj, detectLine};
 		Arbitrator ar = new Arbitrator(bList);
 		ar.start();
+		*/
 		
+		SampleProvider color = colorSensor.getColorIDMode();
+		float[] samples = new float[color.sampleSize()];
+		while(!Button.ESCAPE.isDown()){
+			color.fetchSample(samples, 0);
+			LCD.drawString("COLOR: " + samples[0], 0, 0);
+		}
 	}
 
 	protected static void init(){

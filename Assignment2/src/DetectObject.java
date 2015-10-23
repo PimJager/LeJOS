@@ -2,7 +2,7 @@ import lejos.hardware.Sound;
 import lejos.robotics.SampleProvider;
 import lejos.robotics.subsumption.Behavior;
 
-public class DetectObject implements Behavior{
+public class DetectObject extends WhateverBehavior {
 
 	static SampleProvider touchL 		= Whatever.touchLeftSensor.getTouchMode();
 	static SampleProvider touchR 		= Whatever.touchRightSensor.getTouchMode();
@@ -53,17 +53,6 @@ public class DetectObject implements Behavior{
 			}
 		}
 		if(!_suppressed) afterRotate();
-	}
-	
-	public void beforeRotate(){
-		Whatever.leftMotor.stop(true);
-		Whatever.rightMotor.stop();
-		Whatever.leftMotor.setSpeed(Whatever.ROTATE_SPEED);
-		Whatever.rightMotor.setSpeed(Whatever.ROTATE_SPEED);
-	}
-	public void afterRotate(){
-		Whatever.leftMotor.setSpeed(Whatever.DEFAULT_SPEED);
-		Whatever.rightMotor.setSpeed(Whatever.DEFAULT_SPEED);
 	}
 
 	@Override
