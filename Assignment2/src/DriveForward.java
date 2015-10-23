@@ -8,7 +8,7 @@ public class DriveForward implements Behavior{
 	@Override
 	public boolean takeControl() {
 		//we always want control
-		return true;
+		return Whatever.isRunning();
 	}
 
 	@Override

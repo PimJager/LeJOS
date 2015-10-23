@@ -12,7 +12,8 @@ public class DetectObject extends WhateverBehavior {
 	static float[] distanceSamples 		= new float[distance.sampleSize()];
 	
 	static float SAFE_DISTANCE = (float) 0.37;
-	private boolean _suppressed;
+	
+	private boolean _suppressed = true;
 	
 	@Override
 	public boolean takeControl() {
@@ -31,6 +32,7 @@ public class DetectObject extends WhateverBehavior {
 	public void action() {
 		_suppressed = false;
 		if(!_suppressed) beforeRotate();
+		if(!_suppressed) Sound.beep();
 		if(distanceSamples[0] < SAFE_DISTANCE && !_suppressed){
 			//turn left
 			Whatever.leftMotor.rotate(-100, true);

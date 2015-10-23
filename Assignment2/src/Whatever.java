@@ -1,4 +1,5 @@
 	import lejos.hardware.Button;
+import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
@@ -28,26 +29,33 @@ public class Whatever {
     public static int DEFAULT_ACC = 800;
     public static int ROTATE_ACC = 6000;
     
+    private static boolean foundBlue = false;
+	private static boolean foundRed = false;
+    private static boolean foundYellow = false;	
+    public static boolean changed = true;    
+    private static boolean running = true;
+    
+    //TODO: Debug var, remove
+    public static int curColor = 0;
+    
 	public static void main(String[] args) {
 		init();
 		
 		Behavior drive = new DriveForward();
+		Behavior lcd = new UpdateLCD();
+		Behavior detectColor = new DetectColor();
 		Behavior detectObj = new DetectObject();
 		Behavior detectLine= new DetectLine();
-		Behavior[] bList = {drive, detectObj, detectLine};
+		Behavior quit = new Quit();
+		Behavior[] bList = {drive, detectColor, detectObj, detectLine, quit, lcd};
 		Arbitrator ar = new Arbitrator(bList);
 		ar.start();
 		
-		/*
-		SampleProvider color = colorSensor.getColorIDMode();
-		float[] samples = new float[color.sampleSize()];
-		while(!Button.ESCAPE.isDown()){
-			color.fetchSample(samples, 0);
-			LCD.drawString("COLOR: " + samples[0], 0, 0);
-		}*/
 	}
 
 	protected static void init(){
+		Sound.setVolume(100);
+		
 		leftMotor.setSpeed(DEFAULT_SPEED);
 		leftMotor.setAcceleration(DEFAULT_ACC);
 		
@@ -56,6 +64,36 @@ public class Whatever {
 		
 		leftMotor.rotateTo(0);
 		rightMotor.rotateTo(0);
+	}
+	
+	public static boolean hasFoundBlue() { return foundBlue; }
+
+	public static void findBlue() {
+		changed = true;
+		Whatever.foundBlue = true;
+	}
+
+	public static boolean hasFoundRed() { return foundRed; }
+
+	public static void findRed() {
+		changed = true;
+		Whatever.foundRed = true;
+	}
+
+	public static boolean hasFoundYellow() { return foundYellow; }
+
+	public static void findYellow() {
+		changed = true;
+		Whatever.foundYellow = true;
+	}
+
+	public static boolean isRunning() {
+		return running;
+	}
+
+	public static void finish() {
+		changed = true;
+		Whatever.running = false;
 	}
 	
 }

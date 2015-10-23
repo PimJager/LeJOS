@@ -5,16 +5,17 @@ import lejos.robotics.subsumption.Behavior;
 public class DetectLine extends WhateverBehavior {
 
 	public static int BLACK = 7;
+	public static int ALT_BLACK = -1;
 	
 	static SampleProvider light  	= Whatever.colorSensor.getColorIDMode();
 	static float[] lightSamples 	= new float[light.sampleSize()];
 
-	private boolean _supressed;
+	private boolean _supressed = true;
 	
 	@Override
 	public boolean takeControl() {
 		light.fetchSample(lightSamples, 0);
-		return ((int)lightSamples[0]) == BLACK;
+		return ((int)lightSamples[0]) == BLACK || ((int) lightSamples[0]) == ALT_BLACK;
 	}
 
 	@Override
