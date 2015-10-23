@@ -12,6 +12,7 @@ public class DetectObject implements Behavior{
 	static float[] distanceSamples 		= new float[distance.sampleSize()];
 	
 	static float SAFE_DISTANCE = (float) 0.37;
+	private boolean _suppressed;
 	
 	@Override
 	public boolean takeControl() {
@@ -28,26 +29,30 @@ public class DetectObject implements Behavior{
 
 	@Override
 	public void action() {
-		beforeRotate();
-		if(distanceSamples[0] < SAFE_DISTANCE){
+		_suppressed = false;
+		if(!_suppressed) beforeRotate();
+		if(distanceSamples[0] < SAFE_DISTANCE && !_suppressed){
 			//turn left
 			Main.leftMotor.rotate(-100, true);
 			Main.rightMotor.rotate(100);
 		}
 		else{
-			Main.leftMotor.rotate(-45, true);
-			Main.rightMotor.rotate(-45);
-			if(touchLeftSamples[0] > 0){
+			//go back a bit
+			if(!_suppressed) {
+				Main.leftMotor.rotate(-45, true);
+				Main.rightMotor.rotate(-45);
+			}
+			if(touchLeftSamples[0] > 0 && !_suppressed){
 				//rotate right
 				Main.leftMotor.rotate(100, true);
 				Main.rightMotor.rotate(-100);
-			} else {
+			} else if(!_suppressed ){
 				//rotate left
 				Main.leftMotor.rotate(-100, true);
 				Main.rightMotor.rotate(100);
 			}
 		}
-		afterRotate();
+		if(!_suppressed) afterRotate();
 	}
 	
 	public void beforeRotate(){
@@ -63,7 +68,7 @@ public class DetectObject implements Behavior{
 
 	@Override
 	public void suppress() {
-		//we don't need to do anything
+		_suppressed = true;
 	}
 
 }

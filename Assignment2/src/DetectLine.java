@@ -8,6 +8,8 @@ public class DetectLine implements Behavior {
 	
 	static SampleProvider light  	= Main.lightSensor.getRedMode();
 	static float[] lightSamples 	= new float[light.sampleSize()];
+
+	private boolean _supressed;
 	
 	@Override
 	public boolean takeControl() {
@@ -21,11 +23,14 @@ public class DetectLine implements Behavior {
 
 	@Override
 	public void action() {
+		_supressed = false;
 		//turn left
-		beforeRotate();
-		Main.leftMotor.rotate(-130, true);
-		Main.rightMotor.rotate(-20);	
-		afterRotate();
+		if(!_supressed)	beforeRotate();
+		if(!_supressed) {
+			Main.leftMotor.rotate(-130, true);
+			Main.rightMotor.rotate(-20);
+		}
+		if(!_supressed) afterRotate();
 	}
 	
 	public void beforeRotate(){
@@ -41,8 +46,7 @@ public class DetectLine implements Behavior {
 
 	@Override
 	public void suppress() {
-		//do nothing
-		
+		_supressed= true;
 	}
 
 }
