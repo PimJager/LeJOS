@@ -11,7 +11,7 @@ public class DetectObject extends WhateverBehavior {
 	static float[] touchRightSamples	= new float[touchR.sampleSize()];
 	static float[] distanceSamples 		= new float[distance.sampleSize()];
 	
-	static float SAFE_DISTANCE = (float) 0.37;
+	static float SAFE_DISTANCE = (float) 0.10;
 	
 	private boolean _suppressed = true;
 	
@@ -22,7 +22,6 @@ public class DetectObject extends WhateverBehavior {
 		distance.fetchSample(distanceSamples, 0);
 		if(touchLeftSamples[0] > 0 || touchRightSamples[0] > 0 
 				|| distanceSamples[0] < SAFE_DISTANCE){
-			//Sound.beep();
 			return true;
 		}
 		return false;
@@ -32,7 +31,6 @@ public class DetectObject extends WhateverBehavior {
 	public void action() {
 		_suppressed = false;
 		if(!_suppressed) beforeRotate();
-		if(!_suppressed) Sound.beep();
 		if(distanceSamples[0] < SAFE_DISTANCE && !_suppressed){
 			//turn left
 			Whatever.leftMotor.rotate(-100, true);

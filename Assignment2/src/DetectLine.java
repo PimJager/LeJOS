@@ -23,7 +23,6 @@ public class DetectLine extends WhateverBehavior {
 		_supressed = false;
 		//turn left
 		if(!_supressed)	beforeRotate();
-		if(!_supressed) Sound.beep();
 		if(!_supressed) {
 			Whatever.leftMotor.rotate(-130, true);
 			Whatever.rightMotor.rotate(-20);

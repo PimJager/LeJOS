@@ -38,67 +38,58 @@ public class Whatever {
     private static boolean foundBlue = false;
 	private static boolean foundRed = false;
     private static boolean foundYellow = false;	
-    public static boolean changed = true;    
+    public static boolean updateLCD = true;
+    public static boolean updateBT = false;
     private static boolean running = true;
     
     //TODO: Debug var, remove
     public static int curColor = 0;
+	public static int lastRealColor = -20;
     
 	public static void main(String[] args) {
 		init();
-		/*
+		
 		Behavior drive = new DriveForward();
 		Behavior lcd = new UpdateLCD();
 		Behavior detectColor = new DetectColor();
+		Behavior bluetooth = btSetup();
 		Behavior detectObj = new DetectObject();
 		Behavior detectLine= new DetectLine();
 		Behavior quit = new Quit();
-		Behavior[] bList = {drive, detectColor, detectObj, detectLine, quit, lcd};
+		Behavior[] bList = {drive, lcd, detectColor, bluetooth, detectObj, detectLine, quit};
 		Arbitrator ar = new Arbitrator(bList);
 		ar.start();
-		*/
 		
-		LCD.drawString("_Select slave | master", 0, 0);
+	}
+	
+	protected static Behavior btSetup(){
+		//select wether we are slave or master
+		LCD.drawString("Select BT-mode", 0, 0);
 		LCD.drawString("Left: master", 0, 1);
 		LCD.drawString("Right: slave", 0, 2);
-		boolean master = false;
 		boolean slave = false;
+		boolean master = false;
 		while(!master && !slave){
 			master = Button.LEFT.isDown();
 			slave = Button.RIGHT.isDown();
 		}
+		master = !slave;
 		
 		LCD.clear();
 		
 		BTConnector connector = new BTConnector();
+		NXTConnection connection;
 		if(master) {
 			LCD.drawString("master", 0, 0);
-			NXTConnection connection = connector.connect("Rover4", NXTConnection.RAW);
-			LCD.drawString("Connected", 0, 1);
-			Sound.beep();
-			PrintWriter writer = new PrintWriter(connection.openOutputStream());
-			writer.println("3");
-			writer.flush();
-			LCD.drawString("send 3", 0, 2);
+			connection = connector.connect("Rover4", NXTConnection.RAW);
 		} else {
-			LCD.drawString("slav e", 0, 0);
-			NXTConnection connection = connector.waitForConnection(10000, NXTConnection.RAW);
-			LCD.drawString("Connected!!", 0, 1);
-			Sound.beep();
-			DataInputStream in = connection.openDataInputStream();
-			byte[] buffer = new byte[2];
-			int i = 0;
-			byte b;
-			try{
-				while((b = in.readByte()) != '\n' && i < 2)
-					buffer[i++] = b;
-				LCD.drawString("Received:", 0, 2);
-				LCD.drawString(new String(buffer), 0, 3);
-			} catch (IOException a) {
-				LCD.drawString("IO EXCEPTION", 0, 2);
-			}
+			LCD.drawString("slave", 0, 0);
+			connection = connector.waitForConnection(10000, NXTConnection.RAW);
 		}
-		while(true) {}
+		
+		Sound.beep(); 
+		LCD.clear();
+		return new Bluetooth(connection);
 	}
 
 	protected static void init(){
@@ -117,21 +108,24 @@ public class Whatever {
 	public static boolean hasFoundBlue() { return foundBlue; }
 
 	public static void findBlue() {
-		changed = true;
+		updateLCD = true;
+		updateBT = true;
 		Whatever.foundBlue = true;
 	}
 
 	public static boolean hasFoundRed() { return foundRed; }
 
 	public static void findRed() {
-		changed = true;
+		updateLCD = true;
+		updateBT = true;
 		Whatever.foundRed = true;
 	}
 
 	public static boolean hasFoundYellow() { return foundYellow; }
 
 	public static void findYellow() {
-		changed = true;
+		updateLCD = true;
+		updateBT = true;
 		Whatever.foundYellow = true;
 	}
 
@@ -140,8 +134,9 @@ public class Whatever {
 	}
 
 	public static void finish() {
-		changed = true;
+		updateLCD = true;
 		Whatever.running = false;
 	}
 	
 }
+
