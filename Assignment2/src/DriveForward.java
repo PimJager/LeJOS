@@ -16,8 +16,8 @@ public class DriveForward implements Behavior{
 		suppressed = false;
 		//Sound.buzz();
 		while(!suppressed){
-			Main.leftMotor.forward();
-			Main.rightMotor.forward();
+			Whatever.leftMotor.forward();
+			Whatever.rightMotor.forward();
 			Thread.yield();
 		}
 	}

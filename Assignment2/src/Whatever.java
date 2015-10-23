@@ -12,7 +12,7 @@ import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 
 
-public class Main {
+public class Whatever {
 	
 	public static EV3LargeRegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.A);
     public static EV3LargeRegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.D);
@@ -36,25 +36,6 @@ public class Main {
 		Arbitrator ar = new Arbitrator(bList);
 		ar.start();
 		
-		/*
-		SampleProvider touchL 	= touchLeftSensor.getTouchMode();
-		SampleProvider touchR 	= touchRightSensor.getTouchMode();
-		SampleProvider light  	= lightSensor.getRedMode();
-		SampleProvider distance = distanceSensor.getDistanceMode();
-		float[] touchLeftSamples = new float[touchL.sampleSize()];
-		float[] touchRightSamples = new float[touchR.sampleSize()];
-		float[] lightSamples = new float[light.sampleSize()];
-		float[] distanceSamples = new float[distance.sampleSize()];
-		while(!Button.ESCAPE.isDown()){
-			touchL.fetchSample(touchLeftSamples, 0);
-			touchR.fetchSample(touchRightSamples, 0);
-			light.fetchSample(lightSamples, 0);
-			distance.fetchSample(distanceSamples, 0);
-			LCD.drawString("TL "+touchLeftSamples[0], 0, 0);
-			LCD.drawString("TR "+touchRightSamples[0], 0, 1);
-			LCD.drawString("LI "+lightSamples[0], 0, 2);
-			LCD.drawString("DI "+distanceSamples[0]+"m", 0, 3);
-		}*/
 	}
 
 	protected static void init(){

@@ -4,9 +4,9 @@ import lejos.robotics.subsumption.Behavior;
 
 public class DetectObject implements Behavior{
 
-	static SampleProvider touchL 		= Main.touchLeftSensor.getTouchMode();
-	static SampleProvider touchR 		= Main.touchRightSensor.getTouchMode();
-	static SampleProvider distance  	= Main.distanceSensor.getDistanceMode();
+	static SampleProvider touchL 		= Whatever.touchLeftSensor.getTouchMode();
+	static SampleProvider touchR 		= Whatever.touchRightSensor.getTouchMode();
+	static SampleProvider distance  	= Whatever.distanceSensor.getDistanceMode();
 	static float[] touchLeftSamples 	= new float[touchL.sampleSize()];
 	static float[] touchRightSamples	= new float[touchR.sampleSize()];
 	static float[] distanceSamples 		= new float[distance.sampleSize()];
@@ -33,37 +33,37 @@ public class DetectObject implements Behavior{
 		if(!_suppressed) beforeRotate();
 		if(distanceSamples[0] < SAFE_DISTANCE && !_suppressed){
 			//turn left
-			Main.leftMotor.rotate(-100, true);
-			Main.rightMotor.rotate(100);
+			Whatever.leftMotor.rotate(-100, true);
+			Whatever.rightMotor.rotate(100);
 		}
 		else{
 			//go back a bit
 			if(!_suppressed) {
-				Main.leftMotor.rotate(-45, true);
-				Main.rightMotor.rotate(-45);
+				Whatever.leftMotor.rotate(-45, true);
+				Whatever.rightMotor.rotate(-45);
 			}
 			if(touchLeftSamples[0] > 0 && !_suppressed){
 				//rotate right
-				Main.leftMotor.rotate(100, true);
-				Main.rightMotor.rotate(-100);
+				Whatever.leftMotor.rotate(100, true);
+				Whatever.rightMotor.rotate(-100);
 			} else if(!_suppressed ){
 				//rotate left
-				Main.leftMotor.rotate(-100, true);
-				Main.rightMotor.rotate(100);
+				Whatever.leftMotor.rotate(-100, true);
+				Whatever.rightMotor.rotate(100);
 			}
 		}
 		if(!_suppressed) afterRotate();
 	}
 	
 	public void beforeRotate(){
-		Main.leftMotor.stop(true);
-		Main.rightMotor.stop();
-		Main.leftMotor.setSpeed(Main.ROTATE_SPEED);
-		Main.rightMotor.setSpeed(Main.ROTATE_SPEED);
+		Whatever.leftMotor.stop(true);
+		Whatever.rightMotor.stop();
+		Whatever.leftMotor.setSpeed(Whatever.ROTATE_SPEED);
+		Whatever.rightMotor.setSpeed(Whatever.ROTATE_SPEED);
 	}
 	public void afterRotate(){
-		Main.leftMotor.setSpeed(Main.DEFAULT_SPEED);
-		Main.rightMotor.setSpeed(Main.DEFAULT_SPEED);
+		Whatever.leftMotor.setSpeed(Whatever.DEFAULT_SPEED);
+		Whatever.rightMotor.setSpeed(Whatever.DEFAULT_SPEED);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ public class DetectLine implements Behavior {
 
 	public static float TRESHOLD = (float) 0.45;
 	
-	static SampleProvider light  	= Main.lightSensor.getRedMode();
+	static SampleProvider light  	= Whatever.lightSensor.getRedMode();
 	static float[] lightSamples 	= new float[light.sampleSize()];
 
 	private boolean _supressed;
@@ -27,21 +27,21 @@ public class DetectLine implements Behavior {
 		//turn left
 		if(!_supressed)	beforeRotate();
 		if(!_supressed) {
-			Main.leftMotor.rotate(-130, true);
-			Main.rightMotor.rotate(-20);
+			Whatever.leftMotor.rotate(-130, true);
+			Whatever.rightMotor.rotate(-20);
 		}
 		if(!_supressed) afterRotate();
 	}
 	
 	public void beforeRotate(){
-		Main.leftMotor.stop(true);
-		Main.rightMotor.stop();
-		Main.leftMotor.setSpeed(Main.ROTATE_SPEED);
-		Main.rightMotor.setSpeed(Main.ROTATE_SPEED);
+		Whatever.leftMotor.stop(true);
+		Whatever.rightMotor.stop();
+		Whatever.leftMotor.setSpeed(Whatever.ROTATE_SPEED);
+		Whatever.rightMotor.setSpeed(Whatever.ROTATE_SPEED);
 	}
 	public void afterRotate(){
-		Main.leftMotor.setSpeed(Main.DEFAULT_SPEED);
-		Main.rightMotor.setSpeed(Main.DEFAULT_SPEED);
+		Whatever.leftMotor.setSpeed(Whatever.DEFAULT_SPEED);
+		Whatever.rightMotor.setSpeed(Whatever.DEFAULT_SPEED);
 	}
 
 	@Override
