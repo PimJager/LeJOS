@@ -26,24 +26,25 @@ public class Whatever {
     public static int DEFAULT_SPEED = 300;
     public static int ROTATE_SPEED = 100;
     public static int DEFAULT_ACC = 800;
+    public static int ROTATE_ACC = 6000;
     
 	public static void main(String[] args) {
 		init();
-		/*
+		
 		Behavior drive = new DriveForward();
 		Behavior detectObj = new DetectObject();
 		Behavior detectLine= new DetectLine();
 		Behavior[] bList = {drive, detectObj, detectLine};
 		Arbitrator ar = new Arbitrator(bList);
 		ar.start();
-		*/
 		
+		/*
 		SampleProvider color = colorSensor.getColorIDMode();
 		float[] samples = new float[color.sampleSize()];
 		while(!Button.ESCAPE.isDown()){
 			color.fetchSample(samples, 0);
 			LCD.drawString("COLOR: " + samples[0], 0, 0);
-		}
+		}*/
 	}
 
 	protected static void init(){

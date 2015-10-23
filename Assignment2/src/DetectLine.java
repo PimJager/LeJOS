@@ -4,9 +4,9 @@ import lejos.robotics.subsumption.Behavior;
 
 public class DetectLine extends WhateverBehavior {
 
-	public static float TRESHOLD = (float) 0.45;
+	public static int BLACK = 7;
 	
-	static SampleProvider light  	= Whatever.colorSensor.getRedMode();
+	static SampleProvider light  	= Whatever.colorSensor.getColorIDMode();
 	static float[] lightSamples 	= new float[light.sampleSize()];
 
 	private boolean _supressed;
@@ -14,11 +14,7 @@ public class DetectLine extends WhateverBehavior {
 	@Override
 	public boolean takeControl() {
 		light.fetchSample(lightSamples, 0);
-		if(lightSamples[0] < TRESHOLD){
-			//Sound.beep();
-			return true;
-		}
-		return false;
+		return ((int)lightSamples[0]) == BLACK;
 	}
 
 	@Override
@@ -26,6 +22,7 @@ public class DetectLine extends WhateverBehavior {
 		_supressed = false;
 		//turn left
 		if(!_supressed)	beforeRotate();
+		if(!_supressed) Sound.beep();
 		if(!_supressed) {
 			Whatever.leftMotor.rotate(-130, true);
 			Whatever.rightMotor.rotate(-20);
