@@ -12,6 +12,14 @@ public class Bluetooth extends WhateverBehavior {
 	private static PrintWriter btWriter;
 	private static DataInputStream btIn;
 	
+	public static final int RED = 0;
+	public static final int BLUE = 1;
+	public static final int YELLOW = 2;
+	
+	private boolean[] colorsSend = new boolean[3];
+	private String[] colors = {"RED", "BLUE", "YELLOW"};
+	private String[] checkFor = {"R", "B", "Y"};
+	
 	public Bluetooth(NXTConnection conn){
 		connection = conn;
 		btWriter = new PrintWriter(connection.openOutputStream());
@@ -28,13 +36,14 @@ public class Bluetooth extends WhateverBehavior {
 	@Override
 	public void action() {
 		stop();
-		byte[] send = {'0', '0', '0', '\n'};
-		if(Whatever.hasFoundYellow()) send[0] = '1';
-		if(Whatever.hasFoundRed()) send[1] = '1';
-		if(Whatever.hasFoundBlue()) send[2] = '1';
-		btWriter.print(send);
+		String send = "";
+		if(Whatever.hasFoundYellow() && !colorsSend[YELLOW]){ send = colors[YELLOW]; colorsSend[YELLOW] = true; }
+		if(Whatever.hasFoundRed() && !colorsSend[RED]) { send = colors[RED]; colorsSend[RED] = true; }
+		if(Whatever.hasFoundBlue() && !colorsSend[BLUE]) { send = colors[BLUE]; colorsSend[BLUE] = true; }
+		
+		btWriter.println(send);
 		btWriter.flush();
-		Sound.beep();
+		
 		Whatever.updateBT = false;
 	}
 
@@ -47,28 +56,21 @@ public class Bluetooth extends WhateverBehavior {
 		@Override
 		public void run() {
 			while(Whatever.isRunning()) {
-				byte[] buffer = new byte[4];
+				byte[] buffer = new byte[32]; //alows for 16char strings
 				int i = 0;
 				byte b;
 				try{
-					while((b = btIn.readByte()) != '\n' && i < 4){
-						buffer[i++] = b;
-						Sound.beep();
+					while ((b = btIn.readByte()) != '\n') {
+						buffer[i] = b;
+						i++;
 					}
-					if(buffer[0] == '1'){
-						Whatever.findYellow();
-					}
-					if(buffer[1] == '1') {
-						Whatever.findRed();
-					} 
-					if(buffer[2] == '1') {
-						Whatever.findBlue();
-					} 
-					Whatever.updateLCD = true;
-					Sound.beep();
-				} catch (IOException a) {
-					Sound.buzz();
-					LCD.drawString("IO_EXCEPTION", 0, 8);
+					String rec = new String(buffer);
+					if(rec.contains(checkFor[RED])) Whatever.findRed();
+					if(rec.contains(checkFor[BLUE])) Whatever.findBlue();
+					if(rec.contains(checkFor[YELLOW])) Whatever.findYellow();
+				} catch(Exception e) {
+					e.printStackTrace();
+					while(true) {}
 				}
 			}
 		}	

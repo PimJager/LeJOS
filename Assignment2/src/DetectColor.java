@@ -40,9 +40,7 @@ public class DetectColor extends WhateverBehavior {
 		
 		if(color != YELLOW && color != BLUE && color != RED) return;
 		
-		//Sound.beep();
 		Whatever.lastRealColor = color;
-		Whatever.updateLCD = true;
 		if(color == YELLOW) Whatever.findYellow();
 		if(color == BLUE) Whatever.findBlue();
 		if(color == RED) Whatever.findRed();

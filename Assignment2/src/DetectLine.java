@@ -26,6 +26,10 @@ public class DetectLine extends WhateverBehavior {
 		if(!_supressed) {
 			Whatever.leftMotor.rotate(-130, true);
 			Whatever.rightMotor.rotate(-20);
+			while(Math.random() < 0.4 && !_supressed) { //sometimes we turn a bit more
+				Whatever.leftMotor.rotate(-300, true);
+				Whatever.rightMotor.rotate(-20);
+			}
 		}
 		if(!_supressed) afterRotate();
 	}

@@ -45,21 +45,27 @@ public class Whatever {
     //TODO: Debug var, remove
     public static int curColor = 0;
 	public static int lastRealColor = -20;
+	
+	//TODO: remove debug stuff
+	public static boolean master = false;
+	private static PrintWriter btWriter;
+	private static DataInputStream btIn;
+	private static NXTConnection connection;
     
 	public static void main(String[] args) {
 		init();
 		
-		Behavior drive = new DriveForward();
-		Behavior lcd = new UpdateLCD();
-		Behavior detectColor = new DetectColor();
-		Behavior bluetooth = btSetup();
-		Behavior detectObj = new DetectObject();
-		Behavior detectLine= new DetectLine();
-		Behavior quit = new Quit();
-		Behavior[] bList = {drive, lcd, detectColor, detectObj, detectLine, quit};
+		Behavior[] bList = {
+							 new DriveForward() 
+							,new UpdateLCD() 
+							,new DetectColor()
+							,new Quit()
+							,btSetup() //returns a Bluetooth behavior
+							,new DetectObject()
+							,new DetectLine()
+							};
 		Arbitrator ar = new Arbitrator(bList);
 		ar.start();
-		
 	}
 	
 	protected static Behavior btSetup(){
@@ -68,7 +74,7 @@ public class Whatever {
 		LCD.drawString("Left: master", 0, 1);
 		LCD.drawString("Right: slave", 0, 2);
 		boolean slave = false;
-		boolean master = false;
+		//boolean master = false; //TODO uncomment
 		while(!master && !slave){
 			master = Button.LEFT.isDown();
 			slave = Button.RIGHT.isDown();
@@ -79,12 +85,12 @@ public class Whatever {
 		LCD.refresh();
 		
 		BTConnector connector = new BTConnector();
-		NXTConnection connection;
+		// NXTConnection connection; //TODO: uncomment
 		if(master) {
-			LCD.drawString("master", 0, 0);
+			LCD.drawString("master", 0, 1);
 			connection = connector.connect("Rover4", NXTConnection.RAW);
 		} else {
-			LCD.drawString("slave", 0, 0);
+			LCD.drawString("slave", 0, 1);
 			connection = connector.waitForConnection(10000, NXTConnection.RAW);
 		}
 		
@@ -93,7 +99,6 @@ public class Whatever {
 			Sound.buzz();
 			while(true) {}
 		} else {
-			Sound.beep(); 
 			LCD.clear();
 			return new Bluetooth(connection);
 		}
@@ -117,7 +122,10 @@ public class Whatever {
 	public static void findBlue() {
 		updateLCD = true;
 		updateBT = true;
-		Whatever.foundBlue = true;
+		if(!foundBlue){
+			Whatever.foundBlue = true;
+			Sound.beep();
+		}
 	}
 
 	public static boolean hasFoundRed() { return foundRed; }
@@ -125,7 +133,10 @@ public class Whatever {
 	public static void findRed() {
 		updateLCD = true;
 		updateBT = true;
-		Whatever.foundRed = true;
+		if(!Whatever.foundRed) {
+			Whatever.foundRed = true;
+			Sound.beep();
+		}
 	}
 
 	public static boolean hasFoundYellow() { return foundYellow; }
@@ -133,7 +144,10 @@ public class Whatever {
 	public static void findYellow() {
 		updateLCD = true;
 		updateBT = true;
-		Whatever.foundYellow = true;
+		if(!foundYellow){
+			Whatever.foundYellow = true;
+			Sound.beep();
+		}			
 	}
 
 	public static boolean isRunning() {
