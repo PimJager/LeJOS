@@ -76,6 +76,7 @@ public class Whatever {
 		master = !slave;
 		
 		LCD.clear();
+		LCD.refresh();
 		
 		BTConnector connector = new BTConnector();
 		NXTConnection connection;
@@ -87,9 +88,15 @@ public class Whatever {
 			connection = connector.waitForConnection(10000, NXTConnection.RAW);
 		}
 		
-		Sound.beep(); 
-		LCD.clear();
-		return new Bluetooth(connection);
+		if(connection == null) {
+			LCD.drawString("CONNECTION CANCELLED!!!", 0, 8);
+			Sound.buzz();
+			while(true) {}
+		} else {
+			Sound.beep(); 
+			LCD.clear();
+			return new Bluetooth(connection);
+		}
 	}
 
 	protected static void init(){

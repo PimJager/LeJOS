@@ -34,6 +34,7 @@ public class Bluetooth extends WhateverBehavior {
 		if(Whatever.hasFoundBlue()) send[2] = '1';
 		btWriter.print(send);
 		btWriter.flush();
+		Sound.beep();
 		Whatever.updateBT = false;
 	}
 
@@ -50,8 +51,10 @@ public class Bluetooth extends WhateverBehavior {
 				int i = 0;
 				byte b;
 				try{
-					while((b = btIn.readByte()) != '\n' && i < 4)
+					while((b = btIn.readByte()) != '\n' && i < 4){
 						buffer[i++] = b;
+						Sound.beep();
+					}
 					if(buffer[0] == '1'){
 						Whatever.findYellow();
 					}
