@@ -52,7 +52,7 @@ public class Whatever {
 		Behavior drive = new DriveForward();
 		Behavior lcd = new UpdateLCD();
 		Behavior detectColor = new DetectColor();
-		//Behavior bluetooth = btSetup();
+		Behavior bluetooth = btSetup();
 		Behavior detectObj = new DetectObject();
 		Behavior detectLine= new DetectLine();
 		Behavior quit = new Quit();
@@ -63,7 +63,7 @@ public class Whatever {
 	}
 	
 	protected static Behavior btSetup(){
-		//select wether we are slave or master
+		//select whether we are slave or master
 		LCD.drawString("Select BT-mode", 0, 0);
 		LCD.drawString("Left: master", 0, 1);
 		LCD.drawString("Right: slave", 0, 2);
