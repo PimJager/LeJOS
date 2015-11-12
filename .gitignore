@@ -50,3 +50,13 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+# Xtext Xtend
+**/src-gen/*
+**/xtend-gen/*
+**/model/generated/*
+
+**/persons.tasks/
+**/persons.tasks.sdk/
+**/persons.tasks.tests/
+**/persons.tasks.ui/
