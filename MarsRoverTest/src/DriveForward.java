@@ -15,8 +15,8 @@ public class DriveForward implements Behavior{
 	public void action() {
 		suppressed = false;
 		while(!suppressed){
-			MarsRoverMaster.leftMotor.forward();
-			MarsRoverMaster.rightMotor.forward();
+			MarsRoverBrick1.leftMotor.forward();
+			MarsRoverBrick1.rightMotor.forward();
 			Thread.yield();
 		}
 	}

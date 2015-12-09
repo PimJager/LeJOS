@@ -10,11 +10,11 @@ public class UpdateLCD implements Behavior {
 
 	@Override
 	public void action() {
-		MarsRoverMaster.updateSensors();
-		LCD.drawString("LeftL: " + MarsRoverMaster.leftLightSamples[0], 0, 0);
-		LCD.drawString("RightL: " + MarsRoverMaster.rightLightSamples[0], 0, 1);
-		LCD.drawString("RearUs: " + MarsRoverMaster.rearUSSamples[0], 0, 2);
-		LCD.drawString("Gyro: " + MarsRoverMaster.gyroSamples[0], 0, 3);
+		MarsRoverBrick1.updateSensors();
+		LCD.drawString("LeftL: " + MarsRoverBrick1.leftLightSamples[0], 0, 0);
+		LCD.drawString("RightL: " + MarsRoverBrick1.rightLightSamples[0], 0, 1);
+		LCD.drawString("RearUs: " + MarsRoverBrick1.rearUSSamples[0], 0, 2);
+		LCD.drawString("Gyro: " + MarsRoverBrick1.gyroSamples[0], 0, 3);
 		
 	}
 
